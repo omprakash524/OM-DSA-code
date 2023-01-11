@@ -1,50 +1,31 @@
-#include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
 struct node{
+    node*left;
     int data;
-    node*next;
-    node(int d){
-        data = d;
-        next = NULL;
+    node*right;
+    node(int k){
+        data = k;
+        left = right = NULL;
     }
 };
-struct Queue{
-    node*front,*rear;
-    Queue(){
-        front=rear=NULL;
+
+int maxlevel = 0;
+void printlevel(node*root, int level){
+    if(root==NULL){
+        return ;
     }
-    void enque(int x){
-        node*temp = new node(x);
-        if(rear==NULL){
-            front=rear=temp;
-            return;
-        }else{
-            rear->next = temp;
-            rear = temp;
-        }
+    if(maxlevel<level){
+        cout<<root->data<<" ";
+        maxlevel = level;
     }
-    void deque(){
-        if(front==NULL){
-            return;
-        }else{
-            node*temp = front;
-            front = front->next;
-            if(front==NULL){
-                rear=NULL;
-            }
-            delete(temp);
-        }
-    }
-};
+    printlevel(root->left,level+1);
+    printlevel(root->right,level+1);
+}
+void printLeftView(node*root){
+    printlevel(root,1);
+}
 int main(){
-    Queue q;
-    q.enque(1);
-    q.enque(2);
-    q.enque(3);
-    q.enque(4);
-    q.enque(5);
-    q.deque();
-    cout<<"Queue front : "<<(q.front)->data<<endl;
-    cout<<"Queue rear : "<<q.rear->data<<endl;
+
     return 0;
 }
